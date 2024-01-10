@@ -1,6 +1,7 @@
 package internship.AI_task_1.controller;
 
 import internship.AI_task_1.entity.User;
+import internship.AI_task_1.repository.UserRepository;
 import internship.AI_task_1.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    public UserController(UserService userService, UserRepository userRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+    }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -31,9 +41,9 @@ public class UserController {
         }
     }
 
-    @PostMapping("/{userId}/{followerId}")
+    @PostMapping("/{userId}/follow")
     public ResponseEntity<User> followUser(@PathVariable Long userId,
-                                           @RequestBody Long followerId) {
+                                           @RequestParam Long followerId) {
         User userToFollow = userService.getUserById(userId);
         User follower = userService.getUserById(followerId);
 

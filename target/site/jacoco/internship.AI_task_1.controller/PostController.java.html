@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PostController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">AI_task_1</a> &gt; <a href="index.source.html" class="el_package">internship.AI_task_1.controller</a> &gt; <span class="el_source">PostController.java</span></div><h1>PostController.java</h1><pre class="source lang-java linenums">package internship.AI_task_1.controller;
+
+import internship.AI_task_1.entity.Post;
+import internship.AI_task_1.entity.User;
+import internship.AI_task_1.service.PostService;
+import internship.AI_task_1.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/posts&quot;)
+<span class="fc" id="L16">public class PostController {</span>
+
+    @Autowired
+    private PostService postService;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping
+    public ResponseEntity&lt;Post&gt; createPost(@RequestBody Post post) {
+<span class="nc" id="L26">        Post newPost = postService.createPost(post);</span>
+<span class="nc" id="L27">        return new ResponseEntity&lt;&gt;(post, HttpStatus.CREATED);</span>
+    }
+
+    @GetMapping(&quot;/user/{userId}&quot;)
+    public ResponseEntity&lt;List&lt;Post&gt;&gt; findPostsByUser(@PathVariable Long userId) {
+<span class="nc" id="L32">        User user = userService.getUserById(userId);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (user != null) {</span>
+<span class="nc" id="L34">            List&lt;Post&gt; posts = postService.getPostsByUser(user);</span>
+<span class="nc" id="L35">            return new ResponseEntity&lt;&gt;(posts, HttpStatus.FOUND);</span>
+        } else {
+<span class="nc" id="L37">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @GetMapping(&quot;/user/{userId}/{postId}&quot;)
+    public ResponseEntity&lt;Post&gt; findSpecificPostByUser(@PathVariable Long userId,
+                                                      @PathVariable Long postId) {
+<span class="nc" id="L44">        User user = userService.getUserById(userId);</span>
+<span class="nc" id="L45">        Post post = postService.findPostById(postId);</span>
+<span class="nc bnc" id="L46" title="All 4 branches missed.">        if (post != null &amp;&amp; user != null) {</span>
+<span class="nc" id="L47">            return new ResponseEntity&lt;&gt;(post, HttpStatus.FOUND);</span>
+        } else {
+<span class="nc" id="L49">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+    @PostMapping(&quot;/user/{userId}/{postId}/like&quot;)
+    public ResponseEntity&lt;Post&gt; likePost(@PathVariable Long userId,
+                                         @PathVariable Long postId) {
+<span class="nc" id="L56">        Post post = postService.findPostById(postId);</span>
+
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        if (post != null) {</span>
+<span class="nc" id="L59">            post.setLikes(post.getLikes() + 1);</span>
+<span class="nc" id="L60">            postService.updatePost(post);</span>
+<span class="nc" id="L61">            return new ResponseEntity&lt;&gt;(post, HttpStatus.OK);</span>
+        } else {
+<span class="nc" id="L63">            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

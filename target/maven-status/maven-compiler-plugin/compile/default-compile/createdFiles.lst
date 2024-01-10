@@ -1,0 +1,11 @@
+internship/AI_task_1/entity/User.class
+internship/AI_task_1/controller/PostController.class
+internship/AI_task_1/service/UserServiceImpl.class
+internship/AI_task_1/service/PostService.class
+internship/AI_task_1/repository/PostRepository.class
+internship/AI_task_1/repository/UserRepository.class
+internship/AI_task_1/service/UserService.class
+internship/AI_task_1/controller/UserController.class
+internship/AI_task_1/service/PostServiceImpl.class
+internship/AI_task_1/AiTask1Application.class
+internship/AI_task_1/entity/Post.class
