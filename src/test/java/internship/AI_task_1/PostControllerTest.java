@@ -6,7 +6,6 @@ import internship.AI_task_1.entity.User;
 import internship.AI_task_1.repository.PostRepository;
 import internship.AI_task_1.service.PostServiceImpl;
 import internship.AI_task_1.service.UserService;
-import jdk.jfr.ContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
